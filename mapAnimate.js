@@ -10,7 +10,8 @@ let cancelAnimationFrame  = window.cancelAnimationFrame || window.webkitCancelAn
  * @constructor
  */
 
-function CircleShow(radius,level,point,color,icon){
+function CircleShow(radius,level,point,color,icon, extData){
+    // debugger;
     console.log(radius);
     if(!window.map || !window.BMap|| !window.BMap.Circle){
         return undefined;
@@ -21,7 +22,7 @@ function CircleShow(radius,level,point,color,icon){
     this.color = color;
     // 创建 AMap.Icon 实例：
     var xinhao_icon = new AMap.Icon({
-        size: new AMap.Size(20, 20),
+        size: new AMap.Size(200, 200),
         // 图标尺寸
         image: icon, // Icon的图像
         imageSize: new AMap.Size(20, 20) // 根据所设置的大小拉伸或压缩图片
@@ -70,7 +71,8 @@ function CircleShow(radius,level,point,color,icon){
             strokeWeight: 1 ,
             strokeColor:"#FF4D50", //线条颜色，为了保证感觉无线条，和填充颜色一致即可
             strokeOpacity: 0.2, //线条透明度，为了保证感觉无线条，和填充颜色透明度一致即可
-            zIndex: 50
+            zIndex: 50,
+            extData: extData //circleName
         });
         this.circles.push(circle);
         circle.setMap(map);
@@ -83,6 +85,7 @@ function CircleShow(radius,level,point,color,icon){
  * @param t0 扩散一次所需的时间
  */
 CircleShow.prototype.start = function (distance,t0){
+    // debugger;
     let _self = this;
     /**
      * 定义动画函数
@@ -108,14 +111,17 @@ CircleShow.prototype.start = function (distance,t0){
         let r = Math.floor(_self.radius*(2*time/t0-time*time/t0/t0));
         let opacity = 0;
         if(time >= t0){
-            //达到运行时间之后
-            //设置圆形覆盖物的样式
-            circle.setRadius(_self.radius);             //半径
-            // circle.setFillOpacity(_self.endOpacity);    //透明度
-            // circle.setStrokeOpacity(_self.endOpacity);  //透明度
-
-            startTime = new Date().getTime() + distance;   //起始时间设置为当前时间加上1倍的时间间隔
-            _self.clock[index] = window.requestAnimationFrame(animateStart.bind(null,startTime,circle,index));
+            // // //达到运行时间之后
+            // // //设置圆形覆盖物的样式
+            // circle.setRadius(_self.radius);             //半径
+            // // // circle.setFillOpacity(_self.endOpacity);    //透明度
+            // // // circle.setStrokeOpacity(_self.endOpacity);  //透明度
+            // //
+            // // startTime = new Date().getTime() + distance;   //起始时间设置为当前时间加上1倍的时间间隔
+            // // _self.clock[index] = window.requestAnimationFrame(animateStart.bind(null,startTime,circle,index));
+            if(circle.B.extData == 'transverseCircle' && loopShow ){
+                initLeiDaZoom();
+            }
         }else{
             //计算透明度
             let opacity = _self.color.fillOpacity -
