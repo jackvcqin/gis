@@ -24,31 +24,31 @@
 	</head>
 	<body>
 		<div id="form">
-			<label>
-				<span>震源经度 :</span>
-				<input id="longitude" type="text" name="longitude" placeholder="请输入经度" value="103.805984"/>
-			</label>
-			<label>
-				<span>震源纬度 :</span>
-				<input id="latitude" type="text" name="latitude" placeholder="请输入纬度" value="30.987529"/>
-			</label>
-			<label>
-				<span>波动范围(km) :</span>
-				<input id="radius" type="text" name="radius" placeholder="请输入波及范围" value="100"/>
-			</label>
-			<label>
-				<span>横波速度(km/s) :</span>
-				<input id="transverseSpeed" type="text" name="speed" placeholder="请输入传播速度" value="3.5"/>
-			</label>
-			<label>
-				<span>纵波速度(km/s) :</span>
-				<input id="portraitSpeed" type="text" name="speed" placeholder="请输入传播速度" value="6.0"/>
-			</label>
-			<label>
-<!--				<input id="loopShow" type="checkbox" name="loopShow" />-->
-<!--				<span>循环播放</span>-->
+<!--			<label>-->
+<!--				<span>震源经度 :</span>-->
+<!--				<input id="longitude" type="text" name="longitude" placeholder="请输入经度" value="103.805984"/>-->
 <!--			</label>-->
-			<label>
+<!--			<label>-->
+<!--				<span>震源纬度 :</span>-->
+<!--				<input id="latitude" type="text" name="latitude" placeholder="请输入纬度" value="30.987529"/>-->
+<!--			</label>-->
+<!--			<label>-->
+<!--				<span>波动范围(km) :</span>-->
+<!--				<input id="radius" type="text" name="radius" placeholder="请输入波及范围" value="100"/>-->
+<!--			</label>-->
+<!--			<label>-->
+<!--				<span>横波速度(km/s) :</span>-->
+<!--				<input id="transverseSpeed" type="text" name="speed" placeholder="请输入传播速度" value="3.5"/>-->
+<!--			</label>-->
+<!--			<label>-->
+<!--				<span>纵波速度(km/s) :</span>-->
+<!--				<input id="portraitSpeed" type="text" name="speed" placeholder="请输入传播速度" value="6.0"/>-->
+<!--			</label>-->
+<!--			<label>-->
+<!--&lt;!&ndash;				<input id="loopShow" type="checkbox" name="loopShow" />&ndash;&gt;-->
+<!--&lt;!&ndash;				<span>循环播放</span>&ndash;&gt;-->
+<!--&lt;!&ndash;			</label>&ndash;&gt;-->
+<!--			<label>-->
 				<span></span>
 				<input type="button" class="button" value="地震波显示" onclick="confirmClick()"/>
 				<input type="button" class="button" value="烈度显示" onclick="scopeClick()"/>
@@ -57,11 +57,13 @@
 		<div id="container" style="color: #0000ff"></div>
 	</body>
 	<script type="text/javascript">
-		var longitude; //震源经度
-		var latitude; //震源纬度
-		var radius; //波动范围
-		var transverseSpeed; //横波速度
-		var portraitSpeed; //纵波速度
+		var longitude = 103.805984; //震源经度
+		var latitude = 30.987529; //震源纬度
+		var radius = 150; //波动范围
+		var transverseRadius = 150; //横波范围
+		var transverseSpeed = 3.5; //横波速度
+		var portraitRadius = 35; //纵波范围
+		var portraitSpeed = 6; //纵波速度
 		var map;
 		var loopShow = false; //是否循环展示
 		var infoWindow;
@@ -72,11 +74,11 @@
 
 		//地震波显示事件
 		function confirmClick() {
-			longitude=  document.getElementById("longitude").value || 116.39705658; //震源经度
-			latitude=  document.getElementById("latitude").value || 39.90657599; //震源纬度
-			radius=  document.getElementById("radius").value; //波动范围
-			transverseSpeed=  document.getElementById("transverseSpeed").value; //横波速度
-			portraitSpeed=  document.getElementById("portraitSpeed").value; //纵波速度
+			// longitude=  document.getElementById("longitude").value || 116.39705658; //震源经度
+			// latitude=  document.getElementById("latitude").value || 39.90657599; //震源纬度
+			// radius=  document.getElementById("radius").value; //波动范围
+			// transverseSpeed=  document.getElementById("transverseSpeed").value; //横波速度
+			// portraitSpeed=  document.getElementById("portraitSpeed").value; //纵波速度
 			// loopShow = document.getElementById("loopShow").checked; //循环播放
 			initMap();
 			initLeiDaZoom();
@@ -85,11 +87,11 @@
 
 		//烈度事件
 		function scopeClick() {
-			longitude=  document.getElementById("longitude").value || 116.39705658; //震源经度
-			latitude=  document.getElementById("latitude").value || 39.90657599; //震源纬度
-			radius=  document.getElementById("radius").value; //波动范围
-			transverseSpeed=  document.getElementById("transverseSpeed").value; //横波速度
-			portraitSpeed=  document.getElementById("portraitSpeed").value; //纵波速度
+			// longitude=  document.getElementById("longitude").value || 116.39705658; //震源经度
+			// latitude=  document.getElementById("latitude").value || 39.90657599; //震源纬度
+			// radius=  document.getElementById("radius").value; //波动范围
+			// transverseSpeed=  document.getElementById("transverseSpeed").value; //横波速度
+			// portraitSpeed=  document.getElementById("portraitSpeed").value; //纵波速度
 			// loopShow = document.getElementById("loopShow").checked; //循环播放
 			initMap();
 			// initLeiDaZoom();
@@ -121,7 +123,7 @@
 
 			//构建信息窗体中显示的内容
 			var info = [];
-			info.push("<div style=\"padding:3px 0px 0px 0px; color: #887e7e;\"><h4>地震预警</h4>");
+			info.push("<div style=\"padding:3px 0px 0px 0px; color: #887e7e;\"><h4>震源信息</h4>");
 			info.push("<p>地点：四川成都</p>");
 			info.push("<p>震级：5.0</p>");
 			info.push("<p>本地烈度：Ⅴ</p></div>");
@@ -149,19 +151,19 @@
 			// circles1.start(500, 2000); //水波圆开始
 			var circles2_point_lng = longitude;
 			var circles2_point_lat = latitude;
-			circles2 = new CircleShow(radius*1000, 2, [circles2_point_lng, circles2_point_lat], {
-				fillColor: '#e32d0e',
+			circles2 = new CircleShow(portraitRadius*1000, 2, [circles2_point_lng, circles2_point_lat], {
+				fillColor: '#f3b30a',
 				fillOpacity: 0.6
 			}, 'red2×10.png', 'portraitCircle');
-			circles2.start((radius/10)*1000, (radius/portraitSpeed)*1000); //水波圆开始
+			circles2.start((portraitRadius/10)*1000, (portraitRadius/portraitSpeed)*1000); //水波圆开始
 
 			var circles3_point_lng = longitude;
 			var circles3_point_lat = latitude;
-			circles3 = new CircleShow(radius*1000, 2, [circles3_point_lng, circles3_point_lat], {
-				fillColor: '#e32d0e',
+			circles3 = new CircleShow(transverseRadius*1000, 2, [circles3_point_lng, circles3_point_lat], {
+				fillColor: '#f85236',
 				fillOpacity: 0.4
 			}, 'red2×10.png', 'transverseCircle');
-			circles3.start((radius/10)*1000, (radius/transverseSpeed)*1000); //水波圆开始
+			circles3.start((transverseRadius/10)*1000, (transverseRadius/transverseSpeed)*1000); //水波圆开始
 		}
 
 		//停止动画
