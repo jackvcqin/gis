@@ -27,12 +27,12 @@ function CircleShow(radius,level,point,color,icon, extData){
         image: icon, // Icon的图像
         imageSize: new AMap.Size(20, 20) // 根据所设置的大小拉伸或压缩图片
     });
-    new AMap.Marker({
-        map: map,
-        icon: xinhao_icon,
-        position: point,
-        offset: new AMap.Pixel(-14, -5)
-    });
+    // new AMap.Marker({
+    //     map: map,
+    //     // icon: xinhao_icon,
+    //     position: point,
+    //     // offset: new AMap.Pixel(-14, -5)
+    // });
     if(Number.isNaN(this.level)){
         this.level = 1;
     }//至少1层
@@ -67,10 +67,10 @@ function CircleShow(radius,level,point,color,icon, extData){
             icon: 'direct.png',
             radius: radius, //半径
             fillColor:this.color.fillColor, //圆形填充颜色
-            fillOpacity: 0.2, //填充透明度
+            fillOpacity: 0.6, //填充透明度
             strokeWeight: 1 ,
             strokeColor:"#FF4D50", //线条颜色，为了保证感觉无线条，和填充颜色一致即可
-            strokeOpacity: 0.2, //线条透明度，为了保证感觉无线条，和填充颜色透明度一致即可
+            strokeOpacity: 0.6, //线条透明度，为了保证感觉无线条，和填充颜色透明度一致即可
             zIndex: 50,
             extData: extData //circleName
         });
@@ -119,9 +119,9 @@ CircleShow.prototype.start = function (distance,t0){
             // //
             // // startTime = new Date().getTime() + distance;   //起始时间设置为当前时间加上1倍的时间间隔
             // // _self.clock[index] = window.requestAnimationFrame(animateStart.bind(null,startTime,circle,index));
-            if(circle.B.extData == 'transverseCircle' && loopShow ){
-                initLeiDaZoom();
-            }
+            // if(circle.B.extData == 'transverseCircle' && loopShow ){
+            //     initLeiDaZoom();
+            // }
         }else{
             //计算透明度
             let opacity = _self.color.fillOpacity -
